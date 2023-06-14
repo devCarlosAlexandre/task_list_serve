@@ -18,7 +18,7 @@ class TasksController extends Controller
     public function index()
     {
         $tasks = Tasks::all();
-        return response()->json(["data" => $tasks]);
+        return new TasksResource($tasks);
     }
 
     /**
