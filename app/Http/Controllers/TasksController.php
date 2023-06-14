@@ -26,7 +26,21 @@ class TasksController extends Controller
      */
     public function store(TasksRequest $request)
     {
-        $task = Tasks::create($request->all());
+        $path = null;
+        if ($request->file('attachment')) {
+            $file = $request->file('attachment');
+            $path = $file->store('uploads');
+        }
+
+        $task = Tasks::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'user_id' => $request->user_id,
+            'attachment' => $path,
+            'status' => $request->status,
+            'date_done' => $request->date_done
+        ]);
+
         return new TasksResource($task);
     }
 

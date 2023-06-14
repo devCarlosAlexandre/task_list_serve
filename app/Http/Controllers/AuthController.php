@@ -8,6 +8,7 @@ use App\Http\Requests\RegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -43,6 +44,17 @@ class AuthController extends Controller
             'token' => $token
         ]);
     }
+
+    public function validateToken(Request $request)
+    {
+        if ($token = $request->bearerToken()) {
+            $user = auth('sanctum')->user();
+            $user->token = $token;
+            return new UserResource($user);
+        }
+    }
+
+
     public function logout()
     {
         /** @var User $user */

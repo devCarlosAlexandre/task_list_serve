@@ -21,6 +21,8 @@ Route::post('/register', [AuthController::class, 'register']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/validate-token', [AuthController::class, 'validateToken']);
+
     Route::get('/tasks', [TasksController::class, 'index']);
     Route::post('/tasks', [TasksController::class, 'store']);
     Route::get('/tasks/{id}', [TasksController::class, 'show']);
